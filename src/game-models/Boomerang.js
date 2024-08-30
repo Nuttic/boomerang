@@ -2,25 +2,36 @@
 // В дальнейшем можно добавить другое оружие.
 // Тогда можно будет создать класс Weapon и воспользоваться наследованием!
 
+
 class Boomerang {
-  constructor() {
+
+  constructor({heroPosition}) {
     this.skin = '🌀';
-    this.position = 0;
+    this.position = heroPosition ;
   }
 
-  fly() {
-    this.moveRight();
-    this.moveLeft();
+  fly({enemyPosition, game}) {
+    setInterval(() => {
+      this.position += 1;
+      if(this.position === enemyPosition) {
+        game.enemy.skin = "💩";
+        setInterval(() => {
+          this.position -= 1;
+          if(this.position === this.heroPosition) {
+            process.exit()
+          }
+        }, 100)
+      }
+    },100)
   }
 
   moveLeft() {
-    // Идём влево.
     this.position -= 1;
   }
 
-  moveRight() {
+  async moveRight() {
     // Идём вправо.
-    this.position += 1;
+    this.position += 1
   }
 }
 
